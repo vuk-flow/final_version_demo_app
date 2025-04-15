@@ -57,7 +57,11 @@ function WorkerFormPage() {
         /><br /><br />
         <button type="submit">Add Worker</button>
       </form>
-
+      <br></br>
+      <a href="/csv">Add with CSV</a> <br></br> <br></br>
+      <a href="/delete">Delete user</a> <br></br> <br></br>
+      <a href="/edit">Edit user</a> <br></br> <br></br>
+      <a href="/">List all user</a> <br></br> <br></br>
       {message && <p style={{ color: message.startsWith("Error") ? "red" : "green" }}>{message}</p>}
     </div>
   );

@@ -18,7 +18,7 @@ function WorkerListPage() {
         setLoading(false);
       })
       .catch(err => {
-        console.error("Error fetching workers:", err);
+        // console.error("Error fetching workers:", err);
         setError("Failed to fetch workers.");
         setLoading(false);
       });
@@ -42,7 +42,10 @@ function WorkerListPage() {
         </ul>
       )}
 
-      <a href="/add-worker">Add Worker</a>
+      <a href="/add">Add Worker</a> <br></br> <br></br>
+      <a href="/csv">Add with CSV</a> <br></br> <br></br>
+      <a href="/delete">Delete user</a> <br></br> <br></br>
+      <a href="/edit">Edit user</a> <br></br> <br></br>
     </div>
   );
 }
