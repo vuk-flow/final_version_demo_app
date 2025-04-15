@@ -12,6 +12,6 @@ df = read_csv_file(current_dir)
 
 df_list = df.to_dict(orient='records')
 
-print(df_list)
+# print(df_list)
 
 
