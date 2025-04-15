@@ -22,7 +22,7 @@ const DeleteWorkerForm = () => {
                 throw new Error(errorData.detail)
             }
             const updatedWorker = await response.json()
-            setStatus(`Succesfull update ${JSON.stringify(updatedWorker)}`);
+            setStatus(`Succesfull delete ${JSON.stringify(updatedWorker)}`);
         } catch (error) {
             setStatus(`Error: ${error.message}`)
         }
