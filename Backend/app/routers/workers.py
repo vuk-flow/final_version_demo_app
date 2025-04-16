@@ -1,10 +1,10 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
 from sqlalchemy.orm import Session
-from Backend.app.database import SessionLocal
-from Backend.app.schemas.workers_schema import Worker as WorkerSchema
-from Backend.app.models.workers_model import Worker
-from Backend.app.schemas.workers_schema import WorkerCreate, WorkerUpdate
-from Backend.app.file_reader import df_list
+from app.database import SessionLocal
+from app.schemas.workers_schema import Worker as WorkerSchema
+from app.models.workers_model import Worker
+from app.schemas.workers_schema import WorkerCreate, WorkerUpdate
+from app.file_reader import pd, validate_csv, field_rules
 
 
 router = APIRouter()
@@ -52,13 +52,21 @@ def create_worker(worker: WorkerCreate, db: Session = Depends(get_db)):
 
 
 @router.post("/workers/csv/", response_model=list[WorkerSchema])
-def post_from_csv(db: Session = Depends(get_db)):
-    
+def post_from_csv(file: UploadFile = File(...), db: Session = Depends(get_db)):
+
+    try:
+        df = pd.read_csv(file.file)
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid CSV")
+
+    errors = validate_csv(df, field_rules)
+    if errors:
+        raise HTTPException(status_code=400, detail=errors)
+
+    df_list = df.to_dict(orient="records")
+
     inserted_workers = []
 
-    if not df_list:
-        raise HTTPException(status_code=400, detail="CSV file is empty")
-    
     for worker_data in df_list:
         if db.query(Worker).filter(Worker.email == worker_data["email"]).first():
             continue
@@ -69,8 +77,6 @@ def post_from_csv(db: Session = Depends(get_db)):
     db.commit()
     for worker in inserted_workers:
         db.refresh(worker)
-
-        
 
     return inserted_workers
 

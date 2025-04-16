@@ -18,7 +18,7 @@ const FileUploadPage = () => {
     formData.append('file', file); 
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/workers/csv/', {
+      const response = await fetch('http://0.0.0.0:5555/api/workers/csv/', {
         method: 'POST',
         body: formData,
       });
@@ -28,7 +28,14 @@ const FileUploadPage = () => {
         setStatus('Upload successful! ');
         console.log('Server response:', result);
       } else {
-        setStatus('Upload failed ');
+        const errorData = await response.json();
+        if (Array.isArray(errorData.detail)){
+          setStatus(`Upload failed. CSV is not valid!\n${errorData.detail.join('\n')}`)
+        } else {
+          setStatus(`Upload failed. CSV is not valid!\n${errorData.detail('\n')}`)
+
+        }
+        
       }
     } catch (error) {
       console.error('Error uploading file:', error);
@@ -43,7 +50,14 @@ const FileUploadPage = () => {
       <br /><br />
       <button onClick={handleUpload}>Upload</button>
       <br /><br />
-      <div>{status}</div><br></br>
+      <div>
+      {status && (
+      <div class="status-message" style={{ whiteSpace: 'pre-wrap',color: status.includes('failed') || status.includes('Error') ? 'red' : 'green' }}>
+      {status}
+      </div>
+    )}
+      </div>
+
         
         <a href="/add">Add Worker</a> <br></br> <br></br>
         <a href="/csv">Add with CSV</a> <br></br> <br></br>

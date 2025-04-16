@@ -13,7 +13,7 @@ const DeleteWorkerForm = () => {
         
 
         try {
-            const response = await fetch(`http://localhost:8000/api/workers/delete/${workerId}`, {
+            const response = await fetch(`http://0.0.0.0:5555/api/workers/delete/${workerId}`, {
                 method: 'DELETE',
                 
             });

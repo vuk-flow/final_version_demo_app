@@ -15,6 +15,8 @@ DB_NAME = os.getenv("DB_NAME")
 
 # SQLALCHEMY_DATABASE_URL = "mysql+pymysql://root:root1234@localhost/testbaza"
 SQLALCHEMY_DATABASE_URL = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}"
+SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
+
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
 SessionLocal = sessionmaker(autocommit=False,bind=engine,autoflush=False)

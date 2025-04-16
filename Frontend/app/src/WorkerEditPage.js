@@ -16,7 +16,7 @@ const EditWorkerForm = () => {
         if (email) dataToUpdate.email = email 
 
         try {
-            const response = await fetch(`http://localhost:8000/api/workers/edit/${workerId}`, {
+            const response = await fetch(`http://0.0.0.0:5555/api/workers/edit/${workerId}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type':'application/json'

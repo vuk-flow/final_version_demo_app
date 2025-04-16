@@ -12,7 +12,7 @@ function WorkerListPage() {
 
   const fetchWorkers = () => {
     setLoading(true);
-    axios.get("http://127.0.0.1:8000/api/workers")
+    axios.get("http://0.0.0.0:5555/api/workers/")
       .then(res => {
         setWorkers(res.data);
         setLoading(false);
@@ -26,7 +26,7 @@ function WorkerListPage() {
 
   return (
     <div style={{ maxWidth: "500px", margin: "40px auto" }}>
-      <h2>Worker List</h2>
+      <h2>Worker List2</h2>
 
       {loading ? (
         <p>Loading...</p>

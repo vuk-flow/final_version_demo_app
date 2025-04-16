@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends
-from Backend.app.routers import workers
-from Backend.app.routers.workers import get_db
-from Backend.app.database import engine, Base
+from app.routers import workers
+from app.routers.workers import get_db
+from app.database import engine, Base
 from sqlalchemy.orm import Session
 from sqlalchemy import text
 from fastapi.middleware.cors import CORSMiddleware

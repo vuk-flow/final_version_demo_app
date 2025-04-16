@@ -16,7 +16,7 @@ function WorkerFormPage() {
     setMessage("");
 
     try {
-      const res = await axios.post("http://127.0.0.1:8000/api/workers/", formData);
+      const res = await axios.post("http://0.0.0.0:5555/api/workers/", formData);
       setMessage(`Added: ${res.data.name}`);
       setFormData({ name: "", email: "" });
       navigate("/"); // ✅ navigate instead of history.push
