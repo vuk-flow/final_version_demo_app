@@ -4,7 +4,14 @@ from app.database import SessionLocal
 from app.schemas.workers_schema import Worker as WorkerSchema
 from app.models.workers_model import Worker
 from app.schemas.workers_schema import WorkerCreate, WorkerUpdate
-from app.file_reader import pd, validate_csv, field_rules
+from app.file_reader import (
+    pd,
+    validate_csv,
+    field_rules,
+    name_pattern,
+    email_pattern,
+    re,
+)
 
 
 router = APIRouter()
@@ -24,6 +31,7 @@ def get_all_workers(db: Session = Depends(get_db)):
     if not workers:
         return []
     return workers
+    return {"status": "validated"}
 
 
 @router.get("/workers/{id}", response_model=WorkerSchema)
@@ -43,6 +51,14 @@ def create_worker(worker: WorkerCreate, db: Session = Depends(get_db)):
 
     if exist_already:
         raise HTTPException(status_code=400, detail="Email already exist")
+
+    if re.match(name_pattern, worker.name) is None:
+        print("Invalid name:", worker.name)
+        raise HTTPException(status_code=400, detail="Name must contain only letters!")
+
+    if re.match(email_pattern, worker.email) is None:
+        print("Invalid name:", worker.email)
+        raise HTTPException(status_code=400, detail="Email address is not valid!")
 
     db.add(db_worker)
     db.commit()
