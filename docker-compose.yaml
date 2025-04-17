@@ -8,7 +8,9 @@ networks:
 
 services:
   frontend:
-    build: ./Frontend/app/
+    build: 
+      context: ./Frontend/app/
+      dockerfile: Dockerfile.dev
     ports:
       - "3001:3000"
     depends_on:
@@ -21,7 +23,9 @@ services:
     
 
   backend:
-    build: ./Backend
+    build: 
+      context: ./Backend
+      dockerfile: Dockerfile.dev
     ports:
       - "5555:5555"
     environment:
