@@ -1,6 +1,7 @@
 import { useState } from "react";
 import React from "react";
 import './App.css'
+import { url } from "./WorkerListPage";
 
 const EditWorkerForm = () => {
     const [workerId, setWorkerId] = useState('')
@@ -16,7 +17,7 @@ const EditWorkerForm = () => {
         if (email) dataToUpdate.email = email 
 
         try {
-            const response = await fetch(`http://0.0.0.0:5555/api/workers/edit/${workerId}`, {
+            const response = await fetch(`${url}/api/workers/edit/${workerId}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type':'application/json'

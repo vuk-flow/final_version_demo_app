@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
+export const url = "http://localhost:5555"
+
 function WorkerListPage() {
   const [workers, setWorkers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+
 
   useEffect(() => {
     fetchWorkers();
@@ -12,7 +16,7 @@ function WorkerListPage() {
 
   const fetchWorkers = () => {
     setLoading(true);
-    axios.get("http://0.0.0.0:5555/api/workers/")
+    axios.get(`${url}/api/workers/`)
       .then(res => {
         setWorkers(res.data);
         setLoading(false);
@@ -26,7 +30,7 @@ function WorkerListPage() {
 
   return (
     <div style={{ maxWidth: "500px", margin: "40px auto" }}>
-      <h2>Worker List2</h2>
+      <h2>Worker List</h2>
 
       {loading ? (
         <p>Loading...</p>

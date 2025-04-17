@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import { url } from "./WorkerListPage";
 const FileUploadPage = () => {
   const [file, setFile] = useState(null);
   const [status, setStatus] = useState('');
@@ -18,7 +18,7 @@ const FileUploadPage = () => {
     formData.append('file', file); 
 
     try {
-      const response = await fetch('http://0.0.0.0:5555/api/workers/csv/', {
+      const response = await fetch(`${url}/api/workers/csv/`, {
         method: 'POST',
         body: formData,
       });

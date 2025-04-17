@@ -1,12 +1,24 @@
 version: '3.8'
 
+volumes:
+    db_data:
+
+networks:
+  dev_network:
+
 services:
   frontend:
     build: ./Frontend/app/
     ports:
-      - "3001:80"
+      - "3001:3000"
     depends_on:
       - backend
+    networks:
+      - dev_network
+    volumes:
+      - ./Frontend/app/src:/app/src
+
+    
 
   backend:
     build: ./Backend
@@ -20,6 +32,10 @@ services:
       DB_NAME: testbaza
     depends_on:
       - db
+    networks:
+      - dev_network
+    
+
 
   db:
     image: mysql:8.1.0
@@ -30,6 +46,8 @@ services:
       - "3307:3306"
     volumes:
       - db_data:/var/lib/mysql
+      - ./mysql-init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - dev_network
 
-volumes:
-  db_data:
+

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import React from "react";
 import './App.css'
-
+import { url } from "./WorkerListPage";
 const DeleteWorkerForm = () => {
     const [workerId, setWorkerId] = useState('')
     const [status, setStatus] = useState('')
@@ -13,7 +13,7 @@ const DeleteWorkerForm = () => {
         
 
         try {
-            const response = await fetch(`http://0.0.0.0:5555/api/workers/delete/${workerId}`, {
+            const response = await fetch(`${url}/api/workers/delete/${workerId}`, {
                 method: 'DELETE',
                 
             });

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom"; // ✅ useNavigate instead of useHistory
-
+import WorkerListPage from "./WorkerListPage";
+import { url } from "./WorkerListPage";
 function WorkerFormPage() {
   const [formData, setFormData] = useState({ name: "", email: "" });
   const [message, setMessage] = useState("");
@@ -16,7 +17,7 @@ function WorkerFormPage() {
     setMessage("");
 
     try {
-      const res = await axios.post("http://0.0.0.0:5555/api/workers/", formData);
+      const res = await axios.post(`${url}/api/workers/`, formData);
       setMessage(`Added: ${res.data.name}`);
       setFormData({ name: "", email: "" });
       navigate("/"); // ✅ navigate instead of history.push
