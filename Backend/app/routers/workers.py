@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
 from sqlalchemy.orm import Session
-from app.database import SessionLocal
-from app.schemas.workers_schema import Worker as WorkerSchema
-from app.models.workers_model import Worker
-from app.schemas.workers_schema import WorkerCreate, WorkerUpdate
-from app.file_reader import (
+from  Backend.app.database import SessionLocal
+from  Backend.app.schemas.workers_schema import Worker as WorkerSchema
+from  Backend.app.models.workers_model import Worker
+from  Backend.app.schemas.workers_schema import WorkerCreate, WorkerUpdate
+from  Backend.app.file_reader import (
     pd,
     validate_csv,
     field_rules,
