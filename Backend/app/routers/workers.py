@@ -2,10 +2,10 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 # from app.schemas import workers_schema
 # from app.models import workers_model
-from Backend.app.database import SessionLocal
-from Backend.app.schemas.workers_schema import Worker as WorkerSchema
-from Backend.app.models.workers_model import Worker
-from Backend.app.schemas.workers_schema import WorkerCreate
+from app.database import SessionLocal
+from app.schemas.workers_schema import Worker as WorkerSchema
+from app.models.workers_model import Worker
+from app.schemas.workers_schema import WorkerCreate
 
 router = APIRouter()
 
