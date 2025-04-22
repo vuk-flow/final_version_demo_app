@@ -5,6 +5,9 @@ import WorkerListPage from "./WorkerListPage";
 import EditWorkerForm from "./WorkerEditPage";
 import DeleteWorkerForm from "./WorkerDeletePage";
 import FileUploadPage from "./FileUploadPage";
+import RegisterPage from "./RegisterPage";
+import Login from "./LoginPage";
+import DashboardPage from "./Dashboard";
 
 function App() {
   return (
@@ -17,6 +20,10 @@ function App() {
           <Route path="/edit" element={<EditWorkerForm />} />
           <Route path="/delete" element={<DeleteWorkerForm />} />
           <Route path="/csv" element={<FileUploadPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
+
         </Routes>
       </div>
     </Router>

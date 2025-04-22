@@ -50,6 +50,9 @@ function WorkerListPage() {
       <a href="/csv">Add with CSV</a> <br></br> <br></br>
       <a href="/delete">Delete user</a> <br></br> <br></br>
       <a href="/edit">Edit user</a> <br></br> <br></br>
+      <a href="/register">Register</a> <br></br> <br></br>
+      <a href="/login">Login</a> <br></br> <br></br>
+      <a href="/dashboard">Dashboard</a> <br></br> <br></br>
     </div>
   );
 }

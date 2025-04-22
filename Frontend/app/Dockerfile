@@ -40,6 +40,9 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 
+
+
+
 # Copy source code and build app
 COPY . .
 RUN npm run build

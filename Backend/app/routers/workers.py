@@ -1,7 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
+from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from app.database import SessionLocal
-from app.schemas.workers_schema import Worker as WorkerSchema
+from app.schemas.workers_schema import LoginRequest, Worker as WorkerSchema
 from app.models.workers_model import Worker
 from app.schemas.workers_schema import WorkerCreate, WorkerUpdate
 from app.file_reader import (
@@ -12,6 +13,7 @@ from app.file_reader import (
     email_pattern,
     re,
 )
+from app.security import hash_password, verify_password, create_access_token
 
 
 router = APIRouter()
@@ -128,3 +130,35 @@ def delete_worker_by_id(id: int, db: Session = Depends(get_db)):
     db.commit()
 
     return worker
+
+
+@router.post("/register", response_model=WorkerSchema)
+def register_worker(worker: WorkerCreate, db: Session = Depends(get_db)):
+    existing = db.query(Worker).filter(Worker.email == worker.email).first()
+    if existing:
+        raise HTTPException(status_code=400, detail="Email already registered")
+
+    hashed_password = hash_password(worker.password)
+
+    db_worker = Worker(name=worker.name, email=worker.email, password=hashed_password)
+
+    db.add(db_worker)
+    db.commit()
+    db.refresh(db_worker)
+
+    return db_worker
+
+
+@router.post("/login")
+def login(request: LoginRequest, db: Session = Depends(get_db)):
+    existing_worker = db.query(Worker).filter(Worker.email == request.email).first()
+
+    if not existing_worker or not verify_password(
+        request.password, existing_worker.password
+    ):
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+
+    # Create the token here (assuming you already have the logic for token generation)
+    access_token = create_access_token(data={"sub": existing_worker.email})
+
+    return {"access_token": access_token, "token_type": "bearer"}

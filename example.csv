@@ -1,11 +1,11 @@
-name,email
-John Doe,john.doe@example.com
-Jane Smith,jane.smith@example.com
-Bob Johnson,bob.johnson@example.com
-Alice Brown,alice.brown@example.com
-Charlie White,charlie.white@example.com
-Diana Green,diana.green@example.com
-Evan Blue,evan.blue@example.com
-Grace Purple,grace.purple@example.com
-Hannah Pink,hannah.pink@example.com
-Ian Gray,ian.gray@example.com
+name,email,password
+John Doe,john.doe@example.com,123456
+Jane Smith,jane.smith@example.com,123456
+Bob Johnson,bob.johnson@example.com,123456
+Alice Brown,alice.brown@example.com,123456
+Charlie White,charlie.white@example.com,123456
+Diana Green,diana.green@example.com,123456
+Evan Blue,evan.blue@example.com,123456
+Grace Purple,grace.purple@example.com,123456
+Hannah Pink,hannah.pink@example.com,123456
+Ian Gray,ian.gray@example.com,123456
