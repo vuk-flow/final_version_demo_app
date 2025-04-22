@@ -2,6 +2,8 @@ import { useState } from "react";
 import React from "react";
 import './App.css'
 import { url } from "./WorkerListPage";
+import axios from 'axios'
+
 const DeleteWorkerForm = () => {
     const [workerId, setWorkerId] = useState('')
     const [status, setStatus] = useState('')
@@ -13,18 +15,21 @@ const DeleteWorkerForm = () => {
         
 
         try {
-            const response = await fetch(`${url}/api/workers/delete/${workerId}`, {
-                method: 'DELETE',
-                
-            });
-            if (!response.ok){
-                const errorData = await response.json()
-                throw new Error(errorData.detail)
-            }
-            const updatedWorker = await response.json()
-            setStatus(`Succesfull delete ${JSON.stringify(updatedWorker)}`);
+            const response = await axios.delete(`${url}/api/workers/delete/${workerId}`);
+            setStatus("Successful deletion!")
         } catch (error) {
-            setStatus(`Error: ${error.message}`)
+          if(error.response){
+            const errorData = error.response.data;
+            if (Array.isArray(errorData.detail)){
+      
+              setStatus(`Error occured during deletion!\n${errorData.detail.join('\n')}`);
+            } else {
+              setStatus(`Error occured during deletion!\n${errorData.detail}`);
+            }
+      
+          } else {
+            setStatus('Error occured during deletion!');
+          }
         }
 
     }

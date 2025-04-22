@@ -1,5 +1,7 @@
 import { useState } from "react";
 import React from "react";
+import axios from 'axios'
+
 import './App.css'
 import { url } from "./WorkerListPage";
 
@@ -16,22 +18,23 @@ const EditWorkerForm = () => {
         if (name) dataToUpdate.name = name 
         if (email) dataToUpdate.email = email 
 
+        
         try {
-            const response = await fetch(`${url}/api/workers/edit/${workerId}`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type':'application/json'
-                },
-                body: JSON.stringify(dataToUpdate)
-            });
-            if (!response.ok){
-                const errorData = await response.json()
-                throw new Error(errorData.detail)
+          const response = await axios.patch(`${url}/api/workers/edit/${workerId}`, dataToUpdate)
+          setStatus("Succsessful edit new")
+        } catch (error){
+          if(error.response){
+            const errorData = error.response.data;
+            if (Array.isArray(errorData.detail)){
+
+              setStatus(`Error while editing worker!\n${errorData.detail.join('\n')}`);
+            } else {
+              setStatus(`Error while editing worker!\n${errorData.detail}`);
             }
-            const updatedWorker = await response.json()
-            setStatus(`Succesfull update ${JSON.stringify(updatedWorker)}`);
-        } catch (error) {
-            setStatus(`Error: ${error.message}`)
+
+          } else {
+            setStatus('Error ocurred')
+          }
         }
 
     }

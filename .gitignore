@@ -3,3 +3,5 @@ Frontend/app/node_modules
 .gitsecret/keys/random_seed
 !*.secret
 gitsecrets.env
+mysql-init.sql
+.gitsecret
