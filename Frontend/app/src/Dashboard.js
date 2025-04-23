@@ -8,14 +8,19 @@ const DashboardPage = () => {
     const token = localStorage.getItem("token");
 
     if (!token) {
-      navigate("/login"); // Redirect to login if no token is found
+      navigate("/login"); 
     }
-  }, [navigate]); // Dependency array ensures this runs only once
+  }, [navigate]); 
+
+  const handleLogout = () => {
+    localStorage.removeItem("token")
+    navigate("/login")
+  }
 
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">Welcome to your Dashboard!</h1>
-      {/* Add any content you want to display once the user is authenticated */}
+      <button onClick={handleLogout}> Logout </button>
     </div>
   );
 };
