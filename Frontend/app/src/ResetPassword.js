@@ -22,6 +22,7 @@ const ResetPasswordPage = () => {
       });
       setMessage(response.data.message);
       setTimeout(() => navigate("/login"), 2000);
+      localStorage.removeItem("reset_email")
     } catch (err) {
       setError(err.response?.data?.detail || "Something went wrong");
     }

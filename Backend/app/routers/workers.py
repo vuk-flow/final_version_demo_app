@@ -1,5 +1,5 @@
-from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
-from fastapi.security import OAuth2PasswordRequestForm
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form
+from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 from app.database import SessionLocal
 from app.schemas.workers_schema import (
@@ -18,10 +18,16 @@ from app.file_reader import (
     email_pattern,
     re,
 )
-from app.security import hash_password, verify_password, create_access_token
+from app.security import (
+    hash_password,
+    verify_password,
+    create_access_token,
+    decode_access_token,
+)
 
 
 router = APIRouter()
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
 
 def get_db():
@@ -198,3 +204,24 @@ def check_email(request: EmailCheckRequest, db: Session = Depends(get_db)):
     if not worker:
         raise HTTPException(status_code=404, detail="Email not found")
     return {"message": "Email exists"}
+
+
+@router.post("/change-password")
+def change_password(
+    old_password: str = Form(...),
+    new_password: str = Form(...),
+    token: str = Depends(oauth2_scheme),
+    db: Session = Depends(get_db),
+):
+    user_email = decode_access_token(token)
+    if user_email is None:
+        raise HTTPException(status_code=401, detail="Invalid token")
+
+    user = db.query(Worker).filter(Worker.email == user_email).first()
+    if not user or not verify_password(old_password, user.password):
+        raise HTTPException(status_code=403, detail="Old password is incorrect")
+
+    user.password = hash_password(new_password)
+    db.commit()
+
+    return {"message": "Password updated successfully"}

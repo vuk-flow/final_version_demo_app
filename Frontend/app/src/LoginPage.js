@@ -53,6 +53,9 @@ const Login = () => {
           onChange={(e) => setEmail(e.target.value)}
           required
         />
+        <br></br>
+        <br></br>
+        <br></br>
         <input
           type="password"
           placeholder="Password"
@@ -67,6 +70,9 @@ const Login = () => {
         >
           Login
         </button>
+        <br></br>
+        <br></br>
+        <br></br>
         <a href="/forgot-password" className="text-blue-500 hover:underline">Forgot password?</a>
       </form>
     </div>
