@@ -6,3 +6,4 @@ gitsecrets.env
 mysql-init.sql
 Backend/app/node_modules
 Backend/app/dev.env
+.gitsecret/
