@@ -161,4 +161,12 @@ def login(request: LoginRequest, db: Session = Depends(get_db)):
     # Create the token here (assuming you already have the logic for token generation)
     access_token = create_access_token(data={"sub": existing_worker.email})
 
-    return {"access_token": access_token, "token_type": "bearer"}
+    return {
+        "access_token": access_token,
+        "token_type": "bearer",
+        "user": {
+            "id": existing_worker.id,
+            "name": existing_worker.name,
+            "email": existing_worker.email,
+        },
+    }

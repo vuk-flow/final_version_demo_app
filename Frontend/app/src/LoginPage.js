@@ -21,7 +21,9 @@ const Login = () => {
       });
   
       const token = response.data.access_token;
+      const user = response.data.user;
       localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
       navigate("/dashboard");  // Redirect to dashboard after login
     } catch (error) {
       if (error.response && error.response.data) {
