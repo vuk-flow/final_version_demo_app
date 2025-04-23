@@ -92,6 +92,8 @@ def post_from_csv(file: UploadFile = File(...), db: Session = Depends(get_db)):
     for worker_data in df_list:
         if db.query(Worker).filter(Worker.email == worker_data["email"]).first():
             continue
+        if worker_data.get("password") == "default":
+            worker_data["password"] = hash_password("default")
 
         new_worker = Worker(**worker_data)
         db.add(new_worker)
