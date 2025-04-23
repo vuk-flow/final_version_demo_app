@@ -4,6 +4,5 @@ Frontend/app/node_modules
 !*.secret
 gitsecrets.env
 mysql-init.sql
-.gitsecret
 Backend/app/node_modules
 Backend/app/dev.env
