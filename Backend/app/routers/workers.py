@@ -2,7 +2,12 @@ from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from app.database import SessionLocal
-from app.schemas.workers_schema import LoginRequest, Worker as WorkerSchema
+from app.schemas.workers_schema import (
+    LoginRequest,
+    ResetPasswordRequest,
+    EmailCheckRequest,
+    Worker as WorkerSchema,
+)
 from app.models.workers_model import Worker
 from app.schemas.workers_schema import WorkerCreate, WorkerUpdate
 from app.file_reader import (
@@ -170,3 +175,24 @@ def login(request: LoginRequest, db: Session = Depends(get_db)):
             "email": existing_worker.email,
         },
     }
+
+
+@router.post("/reset-password")
+def reset_password(data: ResetPasswordRequest, db: Session = Depends(get_db)):
+    worker = db.query(Worker).filter(Worker.email == data.email).first()
+    if not worker:
+        raise HTTPException(
+            status_code=404, detail="User with that email does not exist"
+        )
+
+    worker.password = hash_password(data.new_password)
+    db.commit()
+    return {"message": "Password updated successfully"}
+
+
+@router.post("/check-email")
+def check_email(request: EmailCheckRequest, db: Session = Depends(get_db)):
+    worker = db.query(Worker).filter(Worker.email == request.email).first()
+    if not worker:
+        raise HTTPException(status_code=404, detail="Email not found")
+    return {"message": "Email exists"}

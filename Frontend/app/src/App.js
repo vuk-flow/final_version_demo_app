@@ -8,6 +8,8 @@ import FileUploadPage from "./FileUploadPage";
 import RegisterPage from "./RegisterPage";
 import Login from "./LoginPage";
 import DashboardPage from "./Dashboard";
+import ForgotPassword from "./ForgotPassword";
+import ResetPasswordPage from "./ResetPassword";
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
 
         </Routes>
       </div>

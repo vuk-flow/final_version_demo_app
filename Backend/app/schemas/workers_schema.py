@@ -25,3 +25,12 @@ class WorkerUpdate(BaseModel):
 class LoginRequest(BaseModel):
     email: EmailStr
     password: str
+
+
+class ResetPasswordRequest(BaseModel):
+    email: EmailStr
+    new_password: str
+
+
+class EmailCheckRequest(BaseModel):
+    email: EmailStr
