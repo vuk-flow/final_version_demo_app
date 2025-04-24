@@ -39,3 +39,7 @@ def decode_access_token(token: str) -> Optional[str]:
         return payload.get("sub")  # typically user email or id
     except JWTError:
         return None
+
+
+def create_reset_token(email: str):
+    return create_access_token(data={"sub": email}, expires_delta=timedelta(minutes=30))

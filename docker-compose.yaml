@@ -38,6 +38,8 @@ services:
       - db
     networks:
       - dev_network
+    volumes:
+      - ./Backend:/app
     
 
 

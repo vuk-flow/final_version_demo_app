@@ -24,6 +24,8 @@ const ResetPasswordPage = () => {
       setTimeout(() => navigate("/login"), 2000);
       localStorage.removeItem("reset_email")
     } catch (err) {
+      console.log("Error response:", err.response?.data);
+
       setError(err.response?.data?.detail || "Something went wrong");
     }
   };

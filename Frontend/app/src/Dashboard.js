@@ -92,6 +92,7 @@ const DashboardPage = () => {
         </button>
       </form>
       <button onClick={handleLogout}> Logout </button>
+      <a href="/magic">Magic link</a>
     </div>
   );
 };

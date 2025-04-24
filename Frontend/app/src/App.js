@@ -11,6 +11,7 @@ import DashboardPage from "./Dashboard";
 import ForgotPassword from "./ForgotPassword";
 import ResetPasswordPage from "./ResetPassword";
 
+
 function App() {
   return (
     <Router>
@@ -27,6 +28,7 @@ function App() {
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPasswordPage />} />
+          
 
         </Routes>
       </div>
